@@ -13,7 +13,7 @@ image.addEventListener("load", function () {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   let particleArray = [];
-  const numberOfParticles = 5000;
+  const numberOfParticles = 7000;
 
   let mappedImage = [];
   for (let y = 0; y < canvas.height; y++) {
