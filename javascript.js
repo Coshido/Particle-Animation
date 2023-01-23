@@ -28,17 +28,14 @@ image.addEventListener("load", function () {
     }
     mappedImage.push(row);
   }
-  //console.log(mappedImage);
   function calculareRelativeBrightness(red, green, blue) {
-    //return (red + green + blue)/3;
+    //let square = (red + green + blue) / 300;
     let square =
       Math.sqrt(
         red * red * 0.299 + green * green * 0.587 + blue * blue * 0.144
       ) / 100;
-    //console.log(square);
     return square;
   }
-  //console.log(mappedImage);
   let asd = 0;
   class Particle {
     constructor() {
@@ -53,26 +50,9 @@ image.addEventListener("load", function () {
     update() {
       this.positionY = Math.floor(this.y);
       this.positionX = Math.floor(this.x);
-      // console.log(
-      //   "asd: ",
-      //   asd++,
-      //   "y: ",
-      //   this.y,
-      //   this.positionY,
-      //   this.positionX
-      // );
-      // console.log(
-      //   "speed:",
-      //   this.speed.toFixed(2),
-      //   "vel:",
-      //   this.velocity.toFixed(2),
-      //   "mov:",
-      //   (2.6 - this.speed + this.velocity).toFixed(2)
-      // );
-
       this.speed = mappedImage[this.positionY][this.positionX][0];
       let movement = 2.6 - this.speed + this.velocity;
-      //console.log(this.positionY, this.positionX, asd++, movement);
+
       this.y += movement;
       if (this.y >= canvas.height) {
         this.y = 0;
@@ -99,7 +79,6 @@ image.addEventListener("load", function () {
     context.globalAlpha = 0.2;
 
     for (let i = 0; i < particleArray.length; i++) {
-      //console.log("particlearray:", particleArray[i]);
       particleArray[i].update();
       context.globalAlpha = particleArray[i].speed * 0.5;
       particleArray[i].draw();
