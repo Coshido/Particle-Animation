@@ -18,3 +18,17 @@ body {
   height: 600px;
   width: 600px;
 }
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 18px;
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.07);
+}
+.footer-link {
+  font-family: Roboto, sans-serif;
+  text-decoration: none;
+  color: white;
+}
