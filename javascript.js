@@ -13,14 +13,14 @@ image.addEventListener("load", function () {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   const letters = ["R", "U", "D", "I"];
-  let counter = 0;
+  let counter = 1;
 
   setInterval(function () {
     counter++;
   }, 500);
 
   let particleArray = [];
-  const numberOfParticles = 10000;
+  const numberOfParticles = 5000;
 
   let mappedImage = [];
   for (let y = 0; y < canvas.height; y++) {
@@ -70,14 +70,14 @@ image.addEventListener("load", function () {
       }
       let movement = 2.6 - this.speed + this.velocity;
       this.angle += this.speed / 20;
-      this.size = 0.5 + this.speed * 0.9;
-      if (counter % 50 === 0) {
-        this.x = Math.random() * canvas.width;
-        this.y = 0;
-      }
+      this.size = 0.8 + this.speed * 0.9;
+      // if (counter % 50 === 0) {
+      //   this.x = Math.random() * canvas.width;
+      //   this.y = 0;
+      // }
 
-      this.y += movement + Math.cos(this.angle) * 2;
-      this.x += movement + Math.sin(this.angle) * 3;
+      this.y += movement + Math.cos(this.angle) * 1;
+      this.x += movement + Math.sin(this.angle) * 1;
       if (this.y >= canvas.height) {
         this.y = 0;
         this.x = Math.random() * canvas.width;
