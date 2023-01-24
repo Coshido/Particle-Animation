@@ -8,6 +8,11 @@ body {
   width: 100vw;
   overflow: hidden;
   background-color: black;
+  font-family: Roboto, sans-serif;
+}
+@font-face {
+  font-family: Roboto;
+  src: url(./Roboto-Regular.ttf);
 }
 #canvas {
   position: absolute;
@@ -37,7 +42,7 @@ footer {
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid white;
 
-  color: White;
+  color: #fefae0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -51,5 +56,5 @@ footer {
 }
 #test p {
   font-size: 36px;
-  color: gray;
+  color: #faedcd;
 }
