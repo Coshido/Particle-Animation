@@ -12,8 +12,15 @@ image.addEventListener("load", function () {
   const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
   context.clearRect(0, 0, canvas.width, canvas.height);
 
+  const letters = ["R", "U", "D", "I"];
+  let counter = 0;
+
+  setInterval(function () {
+    counter++;
+  }, 500);
+
   let particleArray = [];
-  const numberOfParticles = 7000;
+  const numberOfParticles = 10000;
 
   let mappedImage = [];
   for (let y = 0; y < canvas.height; y++) {
@@ -23,13 +30,15 @@ image.addEventListener("load", function () {
       const green = pixels.data[y * 4 * pixels.width + (x * 4 + 1)];
       const blue = pixels.data[y * 4 * pixels.width + (x * 4 + 2)];
       const brightness = calculareRelativeBrightness(red, green, blue);
-      const cell = [(cellBrigthness = brightness)];
+      const cell = [
+        (cellBrigthness = brightness),
+        (cellColor = `rgb(${red},${green},${blue})`),
+      ];
       row.push(cell);
     }
     mappedImage.push(row);
   }
   function calculareRelativeBrightness(red, green, blue) {
-    //let square = (red + green + blue) / 300;
     let square =
       Math.sqrt(
         red * red * 0.299 + green * green * 0.587 + blue * blue * 0.144
@@ -40,29 +49,60 @@ image.addEventListener("load", function () {
   class Particle {
     constructor() {
       this.x = Math.random() * canvas.width;
-      this.y = 0;
+      this.y = Math.random() * canvas.height;
       this.speed = 0;
       this.velocity = Math.random() * 0.5;
-      this.size = Math.random() * 1.5 + 1;
+      this.size = Math.random() * 2.5 + 1.0;
       this.positionY = Math.floor(this.y);
       this.positionX = Math.floor(this.x);
+      this.angle = 0;
+      this.letter = letters[Math.floor(Math.random() * letters.length)];
+      this.random = Math.random();
     }
     update() {
       this.positionY = Math.floor(this.y);
       this.positionX = Math.floor(this.x);
-      this.speed = mappedImage[this.positionY][this.positionX][0];
+      if (
+        mappedImage[this.positionY] &&
+        mappedImage[this.positionY][this.positionX]
+      ) {
+        this.speed = mappedImage[this.positionY][this.positionX][0];
+      }
       let movement = 2.6 - this.speed + this.velocity;
+      this.angle += this.speed / 20;
+      this.size = 0.5 + this.speed * 0.9;
+      if (counter % 50 === 0) {
+        this.x = Math.random() * canvas.width;
+        this.y = 0;
+      }
 
-      this.y += movement;
+      this.y += movement + Math.cos(this.angle) * 2;
+      this.x += movement + Math.sin(this.angle) * 3;
       if (this.y >= canvas.height) {
         this.y = 0;
         this.x = Math.random() * canvas.width;
       }
+      if (this.x >= canvas.width) {
+        this.x = 0;
+        this.y = Math.random() * canvas.height;
+      }
     }
     draw() {
       context.beginPath();
-      context.fillStyle = "white";
+      if (
+        mappedImage[this.positionY] &&
+        mappedImage[this.positionY][this.positionX]
+      ) {
+        context.fillStyle = mappedImage[this.positionY][this.positionX][1];
+      }
+      //context.font = "12px Arial";
+      // if (this.random < 0.05) {
+      //   context.fillText(this.letter, this.x, this.y);
+      // } else {
+      //   context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      // }
       context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
       context.fill();
     }
   }
@@ -80,7 +120,8 @@ image.addEventListener("load", function () {
 
     for (let i = 0; i < particleArray.length; i++) {
       particleArray[i].update();
-      context.globalAlpha = particleArray[i].speed * 0.5;
+      // context.globalAlpha = particleArray[i].speed * 0.5;
+      context.globalAlpha = 1;
       particleArray[i].draw();
     }
     requestAnimationFrame(animate);
