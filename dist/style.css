@@ -58,3 +58,9 @@ footer {
   font-size: 36px;
   color: #faedcd;
 }
+.matrix-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
